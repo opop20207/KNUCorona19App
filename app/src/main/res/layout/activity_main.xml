@@ -6,13 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button"
+                android:onClick="Main2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="그래프확인1"
+                />
+
+            <Button
+                android:id="@+id/btnLineChart"
+                android:onClick="Main2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LineChart"
+                />
+            <Button
+                android:id="@+id/btnLineChart2"
+                android:onClick="Main2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LineChart2"
+                />
+            
+        </LinearLayout>
+
+
+           </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
