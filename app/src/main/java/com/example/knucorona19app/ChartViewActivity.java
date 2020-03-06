@@ -1,10 +1,10 @@
 package com.example.knucorona19app;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -16,16 +16,16 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
-
-public class LineChart2 extends AppCompatActivity  {
+public class ChartViewActivity extends AppCompatActivity {
     int DATA_RANGE_X=15;
     int DATA_RANGE_Y=7000;
     TextView txtRead;
-    //ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_line_chart2);
+        setContentView(R.layout.activity_chart_view);
+
         LineChart lineChart=(LineChart)findViewById(R.id.lineChart);
         //lineChart.setOnChartValueSelectedListener(this);
         lineChart.getDescription().setEnabled(false);
@@ -37,6 +37,7 @@ public class LineChart2 extends AppCompatActivity  {
         YAxis yRaxis = lineChart.getAxisRight();
 
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxis.setValueFormatter(new MyValueFormatter(lineChart));
         xaxis.setDrawGridLines(false);
         xaxis.setGranularity(1f);
         xaxis.setLabelCount(7);
@@ -50,11 +51,11 @@ public class LineChart2 extends AppCompatActivity  {
         yRaxis.setDrawGridLines(false);
 
         ArrayList<Entry> xVal=new ArrayList<Entry>();
-        xVal.add(new Entry(0,0));
-        xVal.add(new Entry(1,2000));
-        xVal.add(new Entry(2,3050));
-        xVal.add(new Entry(3,1000));
-        xVal.add(new Entry(4,1500));
+        xVal.add(new Entry(20200301,0));
+        xVal.add(new Entry(20200302,2000));
+        xVal.add(new Entry(20200303,3050));
+        xVal.add(new Entry(20200304,1000));
+        xVal.add(new Entry(20200311,1500));
 
         LineDataSet lineData=new LineDataSet(xVal,"확진자 수");
         lineData.setColor(Color.DKGRAY);

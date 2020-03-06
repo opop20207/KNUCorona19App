@@ -20,14 +20,14 @@ Button button;
         Intent intent=null;
         switch (v.getId()){
             case R.id.button:
-                intent=new Intent(this, Graph.class);
+                intent=new Intent(this, ChartViewActivity.class);
                 break;
 
             case R.id.btnLineChart:
-                intent=new Intent(this,LineGraph.class);
+                //intent=new Intent(this,LineGraph.class);
                 break;
             case R.id.btnLineChart2:
-                intent=new Intent(this,LineChart2.class);
+                //intent=new Intent(this,LineChart2.class);
                 break;
         }
         startActivity(intent);
