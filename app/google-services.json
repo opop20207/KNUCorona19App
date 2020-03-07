@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "257233770021",
+    "firebase_url": "https://knucorona19app.firebaseio.com",
+    "project_id": "knucorona19app",
+    "storage_bucket": "knucorona19app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257233770021:android:6e8ac71e0fce34127911cc",
+        "android_client_info": {
+          "package_name": "com.example.knucorona19app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257233770021-r83ia404cj3bp2s91gojh10v2mfv6na4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH-kbgveQt0D2bO9g7PKXjJGehz8Wbggs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257233770021-r83ia404cj3bp2s91gojh10v2mfv6na4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
