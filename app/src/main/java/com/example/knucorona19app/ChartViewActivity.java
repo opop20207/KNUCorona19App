@@ -1,9 +1,14 @@
 package com.example.knucorona19app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -13,20 +18,63 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeMap;
 
 public class ChartViewActivity extends AppCompatActivity {
     int DATA_RANGE_X=15;
     int DATA_RANGE_Y=7000;
-    TextView txtRead;
+    ArrayList<Entry> xVal;
+
+    ProgressDialog progressDialog;
+
+    LineChart lineChart;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+
+    ArrayList<ChartData> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart_view);
 
-        LineChart lineChart=(LineChart)findViewById(R.id.lineChart);
+        init();
+        getData();
+    }
+
+    public void init(){
+        loading();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+
+/*        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );*/
+        data=new ArrayList<>();
+        xVal = new ArrayList<>();
+    }
+
+    public void showChart(){
+        lineChart=(LineChart)findViewById(R.id.lineChart);
         //lineChart.setOnChartValueSelectedListener(this);
         lineChart.getDescription().setEnabled(false);
         //String[] xAxisFormatter={"1","2"};
@@ -39,23 +87,13 @@ public class ChartViewActivity extends AppCompatActivity {
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setValueFormatter(new MyValueFormatter(lineChart));
         xaxis.setDrawGridLines(false);
-        xaxis.setGranularity(1f);
-        xaxis.setLabelCount(7);
 
         yLaxis.setTextColor(Color.BLUE);
-        yLaxis.setAxisMaximum(DATA_RANGE_Y+10);
         yLaxis.setAxisMinimum(0);
 
         yRaxis.setDrawLabels(false);
         yRaxis.setDrawAxisLine(false);
         yRaxis.setDrawGridLines(false);
-
-        ArrayList<Entry> xVal=new ArrayList<Entry>();
-        xVal.add(new Entry(20200301,0));
-        xVal.add(new Entry(20200302,2000));
-        xVal.add(new Entry(20200303,3050));
-        xVal.add(new Entry(20200304,1000));
-        xVal.add(new Entry(20200311,1500));
 
         LineDataSet lineData=new LineDataSet(xVal,"확진자 수");
         lineData.setColor(Color.DKGRAY);
@@ -66,5 +104,67 @@ public class ChartViewActivity extends AppCompatActivity {
 
         lineChart.setData(data);
         lineChart.invalidate();
+    }
+
+    public void getData(){
+        databaseReference.child("ChartData").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Object cd = dataSnapshot.getValue();
+                Log.d("!", cd.getClass().toString());
+                TreeMap<String, HashMap<String, String>> tm = new TreeMap<String, HashMap<String, String>>((HashMap)cd);
+                Log.d("@@@@@@@@", tm.size()+"!");
+                Iterator<String> iter = tm.keySet().iterator();
+                while(iter.hasNext()){
+                    String key = iter.next();
+                    HashMap<String, String> value = tm.get(key);
+                    int xInfection = Integer.parseInt(value.get("infection"));
+                    int xRecovered = Integer.parseInt(value.get("recovered"));
+                    int xDeaths = Integer.parseInt(value.get("deaths"));
+                    SimpleDateFormat myFormat = new SimpleDateFormat("yyyyMMdd");
+                    String s1 = "20160101";
+                    String s2 = value.get("date");
+                    long diff=0;
+                    try{
+                        Date d1 = myFormat.parse(s1);
+                        Date d2 = myFormat.parse(s2);
+                        diff = d2.getTime()-d1.getTime();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    float days = (diff / (1000*60*60*24));
+                    xVal.add(new Entry(days+1,xInfection+xRecovered+xDeaths));
+                }
+                showChart();
+                loadingEnd();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void loading() {
+        //로딩
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        progressDialog = new ProgressDialog(ChartViewActivity.this);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("잠시만 기다려 주세요");
+                        progressDialog.show();
+                    }
+                }, 0);
+    }
+
+    public void loadingEnd() {
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 0);
     }
 }

@@ -22,7 +22,6 @@ Button button;
             case R.id.button:
                 intent=new Intent(this, ChartViewActivity.class);
                 break;
-
             case R.id.btnLineChart:
                 //intent=new Intent(this,LineGraph.class);
                 break;
