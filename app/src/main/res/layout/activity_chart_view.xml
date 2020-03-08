@@ -11,6 +11,10 @@
     android:paddingBottom="20dp"
     android:orientation="horizontal"
     tools:context=".ChartViewActivity">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,10 +22,10 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/imageView4"
             android:layout_width="120dp"
             android:layout_height="30dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             app:srcCompat="@drawable/img_design1" />
 
@@ -29,28 +33,29 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center"
-            android:background="@drawable/img_btn1"
-            android:textSize="25dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/img_btn1"
             android:fontFamily="@font/tmonmonsori"
-            android:text="확진자 수" />
+            android:gravity="center"
+            android:text="확진자 수"
+            android:textSize="25dp" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="400dp" />
+            android:layout_height="400dp"
+            android:layout_marginBottom="10dp" />
 
 
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/imageView3"
             android:layout_width="120dp"
             android:layout_height="30dp"
+            android:layout_gravity="center"
             app:srcCompat="@drawable/img_design1" />
 
     </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
 
 

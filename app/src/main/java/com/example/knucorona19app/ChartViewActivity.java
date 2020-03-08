@@ -2,6 +2,7 @@ package com.example.knucorona19app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -34,7 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
-public class ChartViewActivity extends AppCompatActivity {
+public class ChartViewActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     int DATA_RANGE_X=15;
     int DATA_RANGE_Y=7000;
     ArrayList<Entry> xVal;
@@ -46,6 +47,7 @@ public class ChartViewActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     ArrayList<ChartData> data;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +63,13 @@ public class ChartViewActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
 
-/*        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );*/
-        data=new ArrayList<>();
+                android.R.color.holo_blue_bright
+        );
         xVal = new ArrayList<>();
+        data=new ArrayList<>();
     }
 
     public void showChart(){
@@ -107,6 +106,7 @@ public class ChartViewActivity extends AppCompatActivity {
     }
 
     public void getData(){
+        xVal.clear();
         databaseReference.child("ChartData").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -166,5 +166,12 @@ public class ChartViewActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 0);
+    }
+
+    @Override
+    public void onRefresh() {
+        DBAsyncTask dbAsyncTask = new DBAsyncTask(1, this);
+        dbAsyncTask.execute();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

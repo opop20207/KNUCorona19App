@@ -13,7 +13,6 @@ Button button;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button=(Button) findViewById(R.id.button);
     }
 
     public void Main2(View v){

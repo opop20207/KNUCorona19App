@@ -24,7 +24,7 @@ public class DBUpdateActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    int PageLimit = 1;
+    int PageLimit = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,26 +67,57 @@ public class DBUpdateActivity extends AppCompatActivity {
                             Element date = innerDocument.selectFirst("ul.head.info li b");
                             String sd = date.text().replace("-", "");
                             int sDate = Integer.parseInt(sd);
-                            String recovered, infection, deaths;
+                            String infection, recovered, deaths;
+                            String testNow, testNegative;
+                            String dInfection, dRecovered, dDeaths, dTestNow, dTestNegative;
+                            String [] input = new String[11];
                             if(sDate<20200215) continue;
                             if(sDate<=20200220){
                                 Element parse1 = innerDocument.selectFirst("tbody");
                                 Elements parse2 = parse1.select("tr");
                                 Element parse3 = parse2.get(3);
                                 Elements parse4 = parse3.select("td");
-                                recovered = parse4.get(0).text().replace(",","").replace("*","");
-                                infection = parse4.get(1).text().replace(",","").replace("*","");
-                                deaths = "0";
+                                input[0] = sd;
+                                input[1]= recovered = parse4.get(0).text().replace(",","").replace("*","");
+                                input[2] = infection = parse4.get(1).text().replace(",","").replace("*","");
+                                input[3] = deaths = "0";
+
+                                Element parse5 = parse2.get(2);
+                                Elements parse6 = parse5.select("td");
+                                input[4] = testNow = parse6.get(4).text().replace(",","").replace("*","");
+                                input[5] = testNegative = parse6.get(5).text().replace(",","").replace("*","");
+
+                                Element parse7 = parse2.get(6);
+                                Elements parse8 = parse7.select("td");
+                                input[9] = dTestNow = parse8.get(4).text().replace(",","").replace("*","");
+                                input[10] = dTestNegative = parse8.get(5).text().replace(",","").replace("*","");
+
+                                Element parse9 = parse2.get(7);
+                                Elements parse10 = parse9.select("td");
+                                input[6] = dInfection = parse10.get(0).text().replace(",","").replace("*","");
+                                input[7] = dRecovered = parse10.get(1).text().replace(",","").replace("*","");
+                                input[8] = dDeaths = "+0";
                             }else{
                                 Element parse1 = innerDocument.selectFirst("tbody");
                                 Elements parse2 = parse1.select("tr");
                                 Element parse3 = parse2.get(3);
                                 Elements parse4 = parse3.select("td");
-                                recovered = parse4.get(3).text().replace(",","").replace("*","");
-                                infection = parse4.get(4).text().replace(",","").replace("*","");
-                                deaths = parse4.get(5).text().replace(",","").replace("*","");
+                                input[0] = sd;
+                                input[1]= recovered = parse4.get(3).text().replace(",","").replace("*","");
+                                input[2] = infection = parse4.get(4).text().replace(",","").replace("*","");
+                                input[3] = deaths = parse4.get(5).text().replace(",","").replace("*","");
+                                input[4] = testNow = parse4.get(7).text().replace(",","").replace("*","");
+                                input[5] = testNegative = parse4.get(8).text().replace(",","").replace("*","");
+
+                                Element parse5 = parse2.get(4);
+                                Elements parse6 = parse5.select("td");
+                                input[6] = dInfection = parse6.get(3).text().replace(",","").replace("*","");
+                                input[7] = dRecovered = parse6.get(4).text().replace(",","").replace("*","");
+                                input[8] = dDeaths = parse6.get(5).text().replace(",","").replace("*","");
+                                input[9] = dTestNow = parse6.get(7).text().replace(",","").replace("*","");
+                                input[10] = dTestNegative = parse6.get(8).text().replace(",","").replace("*","");
                             }
-                            ChartData chartData = new ChartData(sd, infection, recovered, deaths);
+                            ChartData chartData = new ChartData(input);
                             data.add(chartData);
                         }
                     }

@@ -58,6 +58,7 @@
             android:layout_marginBottom="20dp"
             android:textSize="25dp"
             android:fontFamily="@font/tmonmonsori"
+            android:onClick="Main2"
             android:text="확진자 수" />
 
         <Button
@@ -69,6 +70,7 @@
             android:layout_marginBottom="20dp"
             android:textSize="25dp"
             android:fontFamily="@font/tmonmonsori"
+            android:onClick="Main2"
             android:text="완치자 수" />
 
         <Button
@@ -80,6 +82,7 @@
             android:layout_marginBottom="20dp"
             android:textSize="25dp"
             android:fontFamily="@font/tmonmonsori"
+            android:onClick="Main2"
             android:text="검사 진행 수" />
 
         <Button
@@ -91,6 +94,7 @@
             android:layout_marginBottom="20dp"
             android:textSize="25dp"
             android:fontFamily="@font/tmonmonsori"
+            android:onClick="Main2"
             android:text="사망자 수" />
 
         <ImageView

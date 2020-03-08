@@ -2,6 +2,7 @@ package com.example.knucorona19app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class ChartViewActivityDeath extends AppCompatActivity {
+public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<Entry> xVal_d;
 
@@ -38,6 +39,7 @@ public class ChartViewActivityDeath extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+    SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<ChartData> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,12 @@ public class ChartViewActivityDeath extends AppCompatActivity {
         loading();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright
+        );
 
         data=new ArrayList<>();
         xVal_d = new ArrayList<>();
@@ -86,6 +94,7 @@ public class ChartViewActivityDeath extends AppCompatActivity {
         lineChart_death.invalidate();
     }
     public void getData(){
+        xVal_d.clear();
         databaseReference.child("ChartData").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -145,5 +154,12 @@ public class ChartViewActivityDeath extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 0);
+    }
+
+    @Override
+    public void onRefresh() {
+        DBAsyncTask dbAsyncTask = new DBAsyncTask(1, this);
+        dbAsyncTask.execute();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

@@ -2,9 +2,11 @@ package com.example.knucorona19app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -28,7 +30,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class ChartViewActivityRecovered extends AppCompatActivity {
+public class ChartViewActivityRecovered extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ArrayList<Entry> xVal_r;
 
@@ -38,6 +40,7 @@ public class ChartViewActivityRecovered extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+    SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<ChartData> data;
 
     @Override
@@ -45,17 +48,23 @@ public class ChartViewActivityRecovered extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart_view_recovered);
 
+        loading();
         init();
         getData();
     }
 
     public void init(){
-        loading();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
 
-        data=new ArrayList<>();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright
+        );
+
         xVal_r = new ArrayList<>();
+        data=new ArrayList<>();
     }
 
     public void showChart(){
@@ -88,11 +97,11 @@ public class ChartViewActivityRecovered extends AppCompatActivity {
         lineChart_recovered.invalidate();
     }
     public void getData(){
+        xVal_r.clear();
         databaseReference.child("ChartData").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Object cd = dataSnapshot.getValue();
-                Log.d("!", cd.getClass().toString());
                 TreeMap<String, HashMap<String, String>> tm = new TreeMap<String, HashMap<String, String>>((HashMap)cd);
                 Log.d("@@@@@@@@", tm.size()+"!");
                 Iterator<String> iter = tm.keySet().iterator();
@@ -147,5 +156,13 @@ public class ChartViewActivityRecovered extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 0);
+    }
+
+
+    @Override
+    public void onRefresh() {
+        final DBAsyncTask dbAsyncTask = new DBAsyncTask(1, this);
+        dbAsyncTask.execute();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }
