@@ -32,6 +32,13 @@
                 android:layout_height="wrap_content"
                 android:text="완치자 수"
                 />
+            <Button
+                android:id="@+id/btnDeath"
+                android:onClick="Main2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사망자 수"
+                />
 
         </LinearLayout>
 

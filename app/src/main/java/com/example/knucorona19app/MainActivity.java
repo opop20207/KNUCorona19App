@@ -25,6 +25,9 @@ Button button;
             case R.id.btnRecovered:
                 intent=new Intent(this,ChartViewActivityRecovered.class);
                 break;
+            case R.id.btnDeath:
+                intent=new Intent(this,ChartViewActivityDeath.class);
+                break;
         }
         startActivity(intent);
     }
