@@ -26,20 +26,13 @@
                 />
 
             <Button
-                android:id="@+id/btnIsolation"
+                android:id="@+id/btnRecovered"
                 android:onClick="Main2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자가격리 수"
+                android:text="완치자 수"
                 />
-            <Button
-                android:id="@+id/btnLineChart2"
-                android:onClick="Main2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LineChart2"
-                />
-            
+
         </LinearLayout>
 
 

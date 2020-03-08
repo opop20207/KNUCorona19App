@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class DBUpdateActivity extends AppCompatActivity {
     private String url = "https://www.cdc.go.kr/board.es?mid=a20501000000&bid=0015&nPage=";
     ArrayList<ChartData> data = new ArrayList<>();
+
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 

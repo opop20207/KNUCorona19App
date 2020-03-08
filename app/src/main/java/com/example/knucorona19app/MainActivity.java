@@ -22,11 +22,8 @@ Button button;
             case R.id.button:
                 intent=new Intent(this, ChartViewActivity.class);
                 break;
-            case R.id.btnIsolation:
-                intent=new Intent(this,ChartViewActivityIsolation.class);
-                break;
-            case R.id.btnLineChart2:
-                //intent=new Intent(this,LineChart2.class);
+            case R.id.btnRecovered:
+                intent=new Intent(this,ChartViewActivityRecovered.class);
                 break;
         }
         startActivity(intent);
