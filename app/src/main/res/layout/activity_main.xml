@@ -1,48 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGray"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
     tools:context=".MainActivity">
 
-
-    <ScrollView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:paddingLeft="30dp"
+        android:layout_width="0dp"
+        android:layout_weight="2"
         android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button"
-                android:onClick="Main2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="확진자 수"
-                />
+            app:srcCompat="@drawable/img_name" />
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/btnRecovered"
-                android:onClick="Main2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="완치자 수"
-                />
-            <Button
-                android:id="@+id/btnDeath"
-                android:onClick="Main2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사망자 수"
-                />
-
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-           </ScrollView>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:paddingRight="20dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="130dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="20dp"
+            app:srcCompat="@drawable/img_design1" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/img_btn1"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="25dp"
+            android:fontFamily="@font/tmonmonsori"
+            android:text="확진자 수" />
+
+        <Button
+            android:id="@+id/btnRecovered"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/img_btn2"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="25dp"
+            android:fontFamily="@font/tmonmonsori"
+            android:text="완치자 수" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/img_btn3"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="25dp"
+            android:fontFamily="@font/tmonmonsori"
+            android:text="검사 진행 수" />
+
+        <Button
+            android:id="@+id/btnDeath"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/img_btn4"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="25dp"
+            android:fontFamily="@font/tmonmonsori"
+            android:text="사망자 수" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="130dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/img_design1" />
+
+    </LinearLayout>
+</LinearLayout>

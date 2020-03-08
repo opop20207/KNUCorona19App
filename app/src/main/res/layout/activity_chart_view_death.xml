@@ -4,12 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/lightGray"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="horizontal"
     tools:context=".ChartViewActivityDeath">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart_death"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/imageView4"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/img_design1" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:background="@drawable/img_btn4"
+            android:textSize="25dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/tmonmonsori"
+            android:text="사망자 수" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart_death"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_height="400dp" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/imageView3"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/img_design1" />
+
+    </LinearLayout>
 
 </LinearLayout>
