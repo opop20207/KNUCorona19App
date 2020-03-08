@@ -22,15 +22,15 @@
                 android:onClick="Main2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="그래프확인1"
+                android:text="확진자 수"
                 />
 
             <Button
-                android:id="@+id/btnLineChart"
+                android:id="@+id/btnIsolation"
                 android:onClick="Main2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LineChart"
+                android:text="자가격리 수"
                 />
             <Button
                 android:id="@+id/btnLineChart2"
