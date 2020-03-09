@@ -37,7 +37,7 @@ import java.util.TreeMap;
 
 public class ChartViewActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     int DATA_RANGE_X=15;
-    int DATA_RANGE_Y=7000;
+    int DATA_RANGE_Y=10000;
     ArrayList<Entry> xVal;
 
     ProgressDialog progressDialog;

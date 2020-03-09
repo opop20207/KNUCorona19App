@@ -27,6 +27,10 @@ Button button;
             case R.id.btnDeath:
                 intent=new Intent(this,ChartViewActivityDeath.class);
                 break;
+            case R.id.btnTest:
+                intent=new Intent(this,ChartViewActivityTest.class);
+                //intent=new Intent(this,Main2Activity.class);
+                break;
         }
         startActivity(intent);
     }

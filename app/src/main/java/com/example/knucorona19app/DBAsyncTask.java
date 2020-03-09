@@ -152,6 +152,9 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
         if(context.getClass() == ChartViewActivityTest.class){
             ((ChartViewActivityTest)context).getData();
         }
+        //if(context.getClass()==Main2Activity.class){
+        //    ((Main2Activity)context).getData();
+        //}
         super.onPostExecute(result);
     }
 }
