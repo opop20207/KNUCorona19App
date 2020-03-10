@@ -41,6 +41,7 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
 
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<ChartData> data;
+    int lastUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
         loading();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-
+        getLastUpdate();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(
@@ -62,6 +63,21 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
 
         data=new ArrayList<>();
         xVal_d = new ArrayList<>();
+    }
+
+    public void getLastUpdate(){
+        databaseReference.child("LastUpdate").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String temp = dataSnapshot.getValue(String.class);
+                lastUpdate = Integer.parseInt(temp);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void showChart(){
@@ -132,6 +148,7 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
 
             }
         });
+        getLastUpdate();
     }
     public void loading() {
         //로딩
@@ -158,7 +175,7 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
 
     @Override
     public void onRefresh() {
-        DBAsyncTask dbAsyncTask = new DBAsyncTask(1, this);
+        DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
         dbAsyncTask.execute();
         swipeRefreshLayout.setRefreshing(false);
     }

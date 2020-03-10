@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class DBAsyncTask extends AsyncTask<String,Void,String> {
     String url = "https://www.cdc.go.kr/board.es?mid=a20501000000&bid=0015&nPage=";
-    int PageLimit;
+    int lastUpdate;
     Context context;
     ArrayList<ChartData> data;
 
@@ -31,8 +31,8 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
 
     }
 
-    public DBAsyncTask(int PageLimit, Context context){
-        this.PageLimit = PageLimit;
+    public DBAsyncTask(int lastUpdate, Context context){
+        this.lastUpdate = lastUpdate;
         this.context = context;
         data = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -49,9 +49,14 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
 
     @Override
     public String doInBackground(String... strings) {
+        Log.e("@@@",lastUpdate+"!");
         String _url;
-        for(int i=1;i<=PageLimit;i++){
-            String suffix = Integer.toString(i);
+        int i=1;
+        boolean flag=false;
+        boolean flag2=false;
+        int ld = lastUpdate;
+        while(true){
+            String suffix = Integer.toString(i++);
             _url = url+suffix;
             try {
                 Document document = Jsoup.connect(_url).get();
@@ -72,6 +77,15 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
                         String dInfection, dRecovered, dDeaths, dTestNow, dTestNegative;
                         String [] input = new String[11];
                         Log.d("!", sd);
+                        if(!flag2){
+                            flag2=true;
+                            ld=sDate;
+                        }
+                        if(sDate == lastUpdate){
+                            Log.e("!!!!!!!!", sDate+"@"+lastUpdate);
+                            flag = true;
+                            break;
+                        }
                         if(sDate<20200215) continue;
                         if(sDate<=20200220){
                             Element parse1 = innerDocument.selectFirst("tbody");
@@ -125,10 +139,14 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            if(flag){
+                break;
+            }
         }
         for(ChartData temp : data){
             databaseReference.child("ChartData").child(temp.date).setValue(temp);
         }
+        databaseReference.child("LastUpdate").setValue(Integer.toString(ld));
         return null;
     }
 

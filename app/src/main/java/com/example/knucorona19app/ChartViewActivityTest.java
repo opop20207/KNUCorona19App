@@ -43,7 +43,7 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
 
     ArrayList<ChartData> data;
     SwipeRefreshLayout swipeRefreshLayout;
-
+    int lastUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,7 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
     public void init(){
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-
+        getLastUpdate();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(
@@ -66,6 +66,21 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
         xVal_t = new ArrayList<>();
         xVal_n=new ArrayList<>();
         data=new ArrayList<>();
+    }
+
+    public void getLastUpdate(){
+        databaseReference.child("LastUpdate").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String temp = dataSnapshot.getValue(String.class);
+                lastUpdate = Integer.parseInt(temp);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void showChart(){
@@ -104,6 +119,7 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
 
     public void getData(){
         xVal_t.clear();
+        xVal_n.clear();
         databaseReference.child("ChartData").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -141,6 +157,7 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
 
             }
         });
+        getLastUpdate();
     }
 
     public void loading() {
@@ -169,7 +186,8 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
 
     @Override
     public void onRefresh() {
-        final DBAsyncTask dbAsyncTask = new DBAsyncTask(1, this);
+        Log.e("@", lastUpdate+"@");
+        final DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
         dbAsyncTask.execute();
         swipeRefreshLayout.setRefreshing(false);
     }

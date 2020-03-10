@@ -42,6 +42,7 @@ public class ChartViewActivityRecovered extends AppCompatActivity implements Swi
 
     SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<ChartData> data;
+    int lastUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class ChartViewActivityRecovered extends AppCompatActivity implements Swi
     public void init(){
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-
+        getLastUpdate();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(
@@ -65,6 +66,21 @@ public class ChartViewActivityRecovered extends AppCompatActivity implements Swi
 
         xVal_r = new ArrayList<>();
         data=new ArrayList<>();
+    }
+
+    public void getLastUpdate(){
+        databaseReference.child("LastUpdate").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String temp = dataSnapshot.getValue(String.class);
+                lastUpdate = Integer.parseInt(temp);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void showChart(){
@@ -134,6 +150,7 @@ public class ChartViewActivityRecovered extends AppCompatActivity implements Swi
 
             }
         });
+        getLastUpdate();
     }
     public void loading() {
         //로딩
@@ -161,7 +178,7 @@ public class ChartViewActivityRecovered extends AppCompatActivity implements Swi
 
     @Override
     public void onRefresh() {
-        final DBAsyncTask dbAsyncTask = new DBAsyncTask(1, this);
+        final DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
         dbAsyncTask.execute();
         swipeRefreshLayout.setRefreshing(false);
     }
