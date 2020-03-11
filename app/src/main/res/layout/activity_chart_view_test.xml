@@ -22,13 +22,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_gravity="center"
-                android:id="@+id/imageView4"
-                android:layout_width="120dp"
+            <Button
+                android:id="@+id/btn_changed"
+                android:layout_width="100dp"
                 android:layout_height="30dp"
+                android:layout_gravity="right"
                 android:layout_marginBottom="10dp"
-                app:srcCompat="@drawable/img_design1" />
+                android:layout_marginRight="5dp"
+                android:background="@drawable/btn_changed"
+                android:text="" />
 
             <TextView
                 android:id="@+id/textView"
@@ -39,20 +41,13 @@
                 android:textSize="25dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/tmonmonsori"
-                android:text="검사자 수" />
+                android:text="검사 진행 수" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart_test"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_height="500dp" />
-
-            <ImageView
-                android:layout_gravity="center"
-                android:id="@+id/imageView3"
-                android:layout_width="120dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/img_design1" />
 
         </LinearLayout>
 
