@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -35,7 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
-public class ChartViewActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class ChartViewActivity extends AppCompatActivity{
     int DATA_RANGE_X=15;
     int DATA_RANGE_Y=10000;
     ArrayList<Entry> xVal;
@@ -47,7 +48,6 @@ public class ChartViewActivity extends AppCompatActivity implements SwipeRefresh
     DatabaseReference databaseReference;
 
     ArrayList<ChartData> data;
-    SwipeRefreshLayout swipeRefreshLayout;
     int lastUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +63,6 @@ public class ChartViewActivity extends AppCompatActivity implements SwipeRefresh
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         getLastUpdate();
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright
-        );
         xVal = new ArrayList<>();
         data=new ArrayList<>();
     }
@@ -184,10 +179,8 @@ public class ChartViewActivity extends AppCompatActivity implements SwipeRefresh
                 }, 0);
     }
 
-    @Override
-    public void onRefresh() {
-        DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
+    public void refresh(View v) {
+        final DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
         dbAsyncTask.execute();
-        swipeRefreshLayout.setRefreshing(false);
     }
 }

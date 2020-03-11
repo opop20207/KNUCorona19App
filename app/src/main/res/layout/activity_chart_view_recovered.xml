@@ -12,12 +12,6 @@
     android:orientation="horizontal"
     tools:context=".ChartViewActivityRecovered">
 
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,6 +25,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/btn_changed"
+            android:onClick="refresh"
             android:text="" />
 
         <TextView
@@ -54,5 +49,4 @@
 
 
     </LinearLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

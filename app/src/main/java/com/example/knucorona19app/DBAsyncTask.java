@@ -81,8 +81,7 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
                             flag2=true;
                             ld=sDate;
                         }
-                        if(sDate == lastUpdate){
-                            Log.e("!!!!!!!!", sDate+"@"+lastUpdate);
+                        if(sDate == lastUpdate || sDate==20200215){
                             flag = true;
                             break;
                         }

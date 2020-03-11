@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -29,7 +30,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class ChartViewActivityDeath extends AppCompatActivity{
 
     ArrayList<Entry> xVal_d;
 
@@ -38,8 +39,6 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
     LineChart lineChart_death;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-
-    SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<ChartData> data;
     int lastUpdate;
     @Override
@@ -55,12 +54,6 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         getLastUpdate();
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright
-        );
-
         data=new ArrayList<>();
         xVal_d = new ArrayList<>();
     }
@@ -173,10 +166,8 @@ public class ChartViewActivityDeath extends AppCompatActivity implements SwipeRe
                 }, 0);
     }
 
-    @Override
-    public void onRefresh() {
-        DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
+    public void refresh(View v) {
+        final DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
         dbAsyncTask.execute();
-        swipeRefreshLayout.setRefreshing(false);
     }
 }

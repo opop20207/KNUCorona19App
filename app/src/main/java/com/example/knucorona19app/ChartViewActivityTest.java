@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-public class ChartViewActivityTest extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class ChartViewActivityTest extends AppCompatActivity {
 
     ArrayList<Entry> xVal_t,xVal_n;
 
@@ -42,7 +43,6 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
     DatabaseReference databaseReference;
 
     ArrayList<ChartData> data;
-    SwipeRefreshLayout swipeRefreshLayout;
     int lastUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +57,6 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         getLastUpdate();
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright
-        );
-
         xVal_t = new ArrayList<>();
         xVal_n=new ArrayList<>();
         data=new ArrayList<>();
@@ -184,12 +178,8 @@ public class ChartViewActivityTest extends AppCompatActivity implements SwipeRef
     }
 
 
-    @Override
-    public void onRefresh() {
-        Log.e("@", lastUpdate+"@");
+    public void refresh(View v) {
         final DBAsyncTask dbAsyncTask = new DBAsyncTask(lastUpdate, this);
         dbAsyncTask.execute();
-        swipeRefreshLayout.setRefreshing(false);
     }
-
 }
