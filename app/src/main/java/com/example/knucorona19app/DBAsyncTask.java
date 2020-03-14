@@ -85,15 +85,34 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
                             flag = true;
                             break;
                         }
-                        if(sDate<20200215) continue;
-                        if(sDate<=20200220){
+                        if(sDate>=20200314){
                             Element parse1 = innerDocument.selectFirst("tbody");
                             Elements parse2 = parse1.select("tr");
                             Element parse3 = parse2.get(3);
                             Elements parse4 = parse3.select("td");
                             input[0] = sd;
-                            input[1]= recovered = parse4.get(0).text().replace(",","").replace("*","");
-                            input[2] = infection = parse4.get(1).text().replace(",","").replace("*","");
+                            input[1] = infection = parse4.get(4).text().replace(",","").replace("*","");
+                            input[2] = recovered = parse4.get(3).text().replace(",","").replace("*","");
+                            input[3] = deaths = parse4.get(5).text().replace(",","").replace("*","");
+                            input[4] = testNow = parse4.get(6).text().replace(",","").replace("*","");
+                            input[5] = testNegative = parse4.get(7).text().replace(",","").replace("*","");
+
+                            Element parse5 = parse2.get(4);
+                            Elements parse6 = parse5.select("td");
+                            input[6] = dInfection = parse6.get(4).text().replace(",","").replace("*","");
+                            input[7] = dRecovered = parse6.get(3).text().replace(",","").replace("*","");
+                            input[8] = dDeaths = parse6.get(5).text().replace(",","").replace("*","");
+                            input[9] = dTestNow = parse6.get(6).text().replace(",","").replace("*","");
+                            input[10] = dTestNegative = parse6.get(7).text().replace(",","").replace("*","");
+                        }
+                        else if(sDate<=20200220){
+                            Element parse1 = innerDocument.selectFirst("tbody");
+                            Elements parse2 = parse1.select("tr");
+                            Element parse3 = parse2.get(3);
+                            Elements parse4 = parse3.select("td");
+                            input[0] = sd;
+                            input[1] = infection = parse4.get(0).text().replace(",","").replace("*","");
+                            input[2]= recovered = parse4.get(1).text().replace(",","").replace("*","");
                             input[3] = deaths = "0";
 
                             Element parse5 = parse2.get(2);
@@ -117,8 +136,8 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
                             Element parse3 = parse2.get(3);
                             Elements parse4 = parse3.select("td");
                             input[0] = sd;
-                            input[1]= recovered = parse4.get(3).text().replace(",","").replace("*","");
-                            input[2] = infection = parse4.get(4).text().replace(",","").replace("*","");
+                            input[1] = infection = parse4.get(4).text().replace(",","").replace("*","");
+                            input[2] = recovered = parse4.get(3).text().replace(",","").replace("*","");
                             input[3] = deaths = parse4.get(5).text().replace(",","").replace("*","");
                             input[4] = testNow = parse4.get(7).text().replace(",","").replace("*","");
                             input[5] = testNegative = parse4.get(8).text().replace(",","").replace("*","");
