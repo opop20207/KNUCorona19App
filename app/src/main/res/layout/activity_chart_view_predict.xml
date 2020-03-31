@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGray"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="horizontal"
+    tools:context=".ChartViewActivityRecovered">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:background="@drawable/img_btn2"
+            android:textSize="25dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/tmonmonsori"
+            android:text="확진자 예측" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart_predict"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_height="match_parent" >
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+
+    </LinearLayout>
+</LinearLayout>

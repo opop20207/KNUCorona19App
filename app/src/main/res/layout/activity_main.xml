@@ -97,6 +97,18 @@
             android:onClick="Main2"
             android:text="사망자 수" />
 
+        <Button
+            android:id="@+id/btnPredict"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/img_btn4"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="25dp"
+            android:fontFamily="@font/tmonmonsori"
+            android:onClick="Main2"
+            android:text="확진자 예측" />
+
 
         <ImageView
             android:id="@+id/imageView5"

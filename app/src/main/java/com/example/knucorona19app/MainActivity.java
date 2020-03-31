@@ -8,7 +8,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +29,9 @@ Button button;
             case R.id.btnTest:
                 intent=new Intent(this,ChartViewActivityTest.class);
                 //intent=new Intent(this,Main2Activity.class);
+                break;
+            case R.id.btnPredict:
+                intent=new Intent(this,ChartViewActivityPredict.class);
                 break;
         }
         startActivity(intent);
