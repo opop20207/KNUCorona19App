@@ -99,11 +99,11 @@ public class DBAsyncTask extends AsyncTask<String,Void,String> {
 
                             Element parse5 = parse2.get(4);
                             Elements parse6 = parse5.select("td");
-                            input[6] = dInfection = parse6.get(4).text().replace(",","").replace("*","");
-                            input[7] = dRecovered = parse6.get(3).text().replace(",","").replace("*","");
-                            input[8] = dDeaths = parse6.get(5).text().replace(",","").replace("*","");
-                            input[9] = dTestNow = parse6.get(6).text().replace(",","").replace("*","");
-                            input[10] = dTestNegative = parse6.get(7).text().replace(",","").replace("*","");
+                            input[6] = dInfection = parse6.get(4).text().replace(",","").replace("*","").replace("(","").replace(")","");
+                            input[7] = dRecovered = parse6.get(3).text().replace(",","").replace("*","").replace("(","").replace(")","");
+                            input[8] = dDeaths = parse6.get(5).text().replace(",","").replace("*","").replace("(","").replace(")","");
+                            input[9] = dTestNow = parse6.get(6).text().replace(",","").replace("*","").replace("(","").replace(")","");
+                            input[10] = dTestNegative = parse6.get(7).text().replace(",","").replace("*","").replace("(","").replace(")","");
                         }
                         else if(sDate<=20200220){
                             Element parse1 = innerDocument.selectFirst("tbody");
